@@ -1,2 +1,26 @@
 # Requesting-DataWith-API
-Web APIs 
+Web APIs are growing in popularity as a way to access open data from government agencies, companies, and other organizations. “API” stands for “Application Program Interface”“; an API provides the rules for software applications to interact. In the case of open data APIs, they provide the rules you need to know to write R code to request and pull data from the organization’s web server into your R session. Usually, some of the computational burden of querying and subsetting the data is taken on by the source’s server, to create the subset of requested data to pass to your computer. In practice, this means you can often pull the subset of data you want from a very large available dataset without having to download the full dataset and load it locally into your R session.
+
+As an overview, the basic steps for accessing and using data from a web API when working in R are:
+
+    Figure out the API rules for HTTP requests
+    Write R code to create a request in the proper format
+    Send the request using GET or POST HTTP methods
+    Once you get back data from the request, parse it into an easier-to-use format if necessary
+
+To get the data from an API, you should first read the organization’s API documentation. An organization will post details on what data is available through their API(s), as well as how to set up HTTP requests to get that data– to request the data through the API, you will typically need to send the organization’s web server an HTTP request using a GET or POST method. The API documentation details will typically show an example GET or POST request for the API, including the base URL to use and the possible query parameters that can be used to customize the dataset request.
+
+For example, the National Aeronautics and Space Administration (NASA) has an API for pulling the Astronomy Picture of the Day. In their API documentation, they specify that the base URL for the API request should be “https://api.nasa.gov/planetary/apod” and that you can include parameters to specify the date of the daily picture you want, whether to pull a high-resolution version of the picture, and a NOAA API key you have requested from NOAA.
+
+Many organizations will require you to get an API key and use this key in each of your API requests. This key allows the organization to control API access, including enforcing rate limits per user. API rate limits restrict how often you can request data (e.g., an hourly limit of 1,000 requests per user for NASA APIs).
+
+API keys should be kept private, so if you are writing code that includes an API key, be very careful not to include the actual key in any code made public (including any code in public GitHub repositories). One way to do this is to save the value of your key in a file named .Renviron in your home directory. This file should be a plain text file and must end in a blank line. Once you’ve saved your API key to a global variable in that file (e.g., with a line added to the .Renviron file likeNOAA_API_KEY="abdafjsiopnab038"), you can assign the key value to an R object in an R session using the Sys.getenvfunction (e.g., noaa_api_key <- Sys.getenv("NOAA_API_KEY")), and then use this object (noaa_api_key) anywhere you would otherwise have used the character string with your API key.
+
+To find more R packages for accessing and exploring open data, check out the Open Data CRAN task view. You can also browse through theROpenSci packages, all of which have GitHub repositories where you can further explore how each package works. ROpenSci is an organization with the mission to create open software tools for science. If you create your own package to access data relevant to scientific research through an API, consider submitting it for peer-review through ROpenSci.
+
+The riem package, developed by Maelle Salmon and an ROpenSci package, is an excellent and straightforward example of how you can use R to pull open data through a web API. This package allows you to pull weather data from airports around the world directly from the Iowa Environmental Mesonet. To show you how to pull data into R through an API, in this section we will walk you through code in the riem package or code based closely on code in the package.
+
+To get a certain set of weather data from the Iowa Environmental Mesonet, you can send an HTTP request specifying a base URL, “https://mesonet.agron.iastate.edu/cgi-bin/request/asos.py/”, as well as some parameters describing the subset of dataset you want (e.g., date ranges, weather variables, output format). Once you know the rules for the names and possible values of these parameters (more on that below), you can submit an HTTP GET request using the GET function from the httr package.
+
+When you are making an HTTP request using the GET or POST functions from the httr package, you can include the key-value pairs for any query parameters as a list object in the query argurment of the function. For example, suppose you want to get wind speed in miles per hour (data = "sped") for Denver, CO, (station = "DEN") for the month of June 2016 (year1 = "2016", month1 = "6", etc.) in Denver’s local time zone (tz = "America/Denver") and in a comma-separated file (format = "comma"). To get this weather dataset, you can run:
+
