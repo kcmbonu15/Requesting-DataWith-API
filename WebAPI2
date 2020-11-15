@@ -1,0 +1,28 @@
+The content call in this code extracts the content from the response to the HTTP request sent by theGET function. The Iowa Environmental Mesonet API offers the option to return the requested data in a comma-separated file (format = “comma” in the GET request), so here content and read_csv are used to extract and read in that csv file. Usually, data will be returned in a JSON format instead. We include more details later in this section on parsing data returned in a JSON format.
+
+The only tricky part of this process is figuring out the available parameter names (e.g., station) and possible values for each (e.g., "DEN" for Denver). Currently, the details you can send in an HTTP request through Iowa Environmental Mesonet’s API include:
+
+    A four-character weather station identifier (station)
+    The weather variables (e.g., temperature, wind speed) to include (data)
+    Starting and ending dates describing the range for which you’d like to pull data (year1, month1, day1, year2,month2, day2)
+    The time zone to use for date-times for the weather observations (tz)
+    Different formatting options (e.g., delimiter to use in the resulting data file [format], whether to include longitude and latitude)
+
+Typically, these parameter names and possible values are explained in the API documentation. In some cases, however, the documentation will be limited. In that case, you may be able to figure out possible values, especially if the API specifies a GET rather than POST method, by playing around with the website’s point-and-click interface and then looking at the url for the resulting data pages. For example, if you look at the Iowa Environmental Mesonet’s page for accessing this data,[https://mesonet.agron.iastate.edu/request/download.phtml?network=IN__ASOS], you’ll notice that the point-and-click web interface allows you the options in the list above, and if you click through to access a dataset using this interface, the web address of the data page includes these parameter names and values.
+
+The riem package implements all these ideas in three very clean and straightforward functions. You can explore the code behind this package and see how these ideas can be incorporated into a small R package, in the /R directory of the package’s https://github.com/ropensci/riem
+
+R packages already exist for many open data APIs. If an R package already exists for an API, you can use functions from that package directly, rather than writing your own code using the API protocols and httr functions. Other examples of existing R packages to interact with open data APIs include:
+
+    twitteR: Twitter
+    rnoaa: National Oceanic and Atmospheric Administration
+    Quandl: Quandl (financial data)
+    RGoogleAnalytics: Google Analytics
+    censusr, acs: United States Census
+    WDI, wbstats: World Bank
+    GuardianR, rdian: The Guardian Media Group
+    blsAPI: Bureau of Labor Statistics
+    rtimes: New York Times
+    dataRetrieval, waterData: United States Geological Survey
+
+If an R package doesn’t exist for an open API and you’d like to write your own package, find out more about writing API packages with this vignette for the httr package. This document includes advice on error handling within R code that accesses data through an open API.
