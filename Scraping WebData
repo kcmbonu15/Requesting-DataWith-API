@@ -1,3 +1,8 @@
-You can also use R to pull and clean web-based data that is not accessible through a web API or as an online flat file. In this case, the strategy will often be to pull in the full web page file (often in HTML or XML) and then parse or clean it within R.
+You can also use R to pull and clean web-based data that is not accessible through a web API or as an online flat file. In this case, 
+the strategy will often be to pull in the full web page file (often in HTML or XML) and then parse or clean it within R.
 
-The rvest package is a good entry point for handling more complex collection and cleaning of web-based data. This package includes functions, for example, that allow you to select certain elements from the code for a web page (e.g., using the html_node and xml_node functions), to parse tables in an HTML document into R data frames (html_table), and to parse, fill out, and submit HTML forms (html_form, set_values, submit_form). Further details on web scraping with R are beyond the scope of this course, but if you’re interested, you can find out more through https://github.com/tidyverse/rvest
+The rvest package is a good entry point for handling more complex collection and cleaning of web-based data. This package includes functions, for example, 
+that allow you to select certain elements from the code for a web page (e.g., using the html_node and xml_node functions), 
+to parse tables in an HTML document into R data frames (html_table), and to parse, fill out, and submit HTML forms (html_form, set_values, submit_form). 
+Further details on web scraping with R are beyond the scope of this course, but if you’re interested,
+you can find out more through https://github.com/tidyverse/rvest
