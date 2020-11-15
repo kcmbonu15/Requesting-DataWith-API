@@ -1,0 +1,5 @@
+Often, data collected from the web, including the data returned from an open API or obtained by scraping a web page, will be in JSON, XML, or HTML format. To use data in a JSON, XML, or HTML format in R, you need to parse the file from its current format and convert it into an R object more useful for analysis.
+
+Typically, JSON-, XML-, or HTML-formatted data is parsed into a list in R, since list objects allow for a lot of flexibility in the structure of the data. However, if the data is structured appropriately, you can often parse data into another type of object (a data frame, for example, if the data fits well into a two-dimensional format of rows and columns). If the data structure of the data that you are pulling in is complex but consistent across different observations, you may alternatively want to create a custom object type to parse the data into.
+
+There are a number of packages for parsing data from these formats, including jsonlite and xml2. To find out more about parsing data from typical web formats, and for more on working with web-based documents and data, see the https://cran.r-project.org/web/views/WebTechnologies.html
